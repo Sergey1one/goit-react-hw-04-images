@@ -40,40 +40,40 @@ theme="colored"/>
 
 
 
-class Searchbar23 extends Component {
+// class Searchbar23 extends Component {
 
-    state = {
-        inputData: ''
-    }
+//     state = {
+//         inputData: ''
+//     }
     
     
-    onFormSubmit = ({input},{resetForm}) => {
+//     onFormSubmit = ({input},{resetForm}) => {
        
-        this.props.onSubmit(input)
-         resetForm();
-    }
-    render() {
-        return (
-            <SearchbarComp>
-            <Formik initialValues={{ input: '' }}
-            onSubmit={this.onFormSubmit}> 
-                    <SearchForm> 
-                         <SearchBtn type="submit">
-      <SearchBtnLabel>Search</SearchBtnLabel>
-    </SearchBtn>
-                        <SearchField type='text' name='input' placeholder='Search images and photos'
-                            autoFocus
-                        autoComplete='off'></SearchField>
+//         this.props.onSubmit(input)
+//          resetForm();
+//     }
+//     render() {
+//         return (
+//             <SearchbarComp>
+//             <Formik initialValues={{ input: '' }}
+//             onSubmit={this.onFormSubmit}> 
+//                     <SearchForm> 
+//                          <SearchBtn type="submit">
+//       <SearchBtnLabel>Search</SearchBtnLabel>
+//     </SearchBtn>
+//                         <SearchField type='text' name='input' placeholder='Search images and photos'
+//                             autoFocus
+//                         autoComplete='off'></SearchField>
                         
                 
-</SearchForm>
-                </Formik>
-                 <ToastContainer
-          position="top-center"
-autoClose={5000}
-theme="colored"/>
-                </SearchbarComp>)
-    }
-}
+// </SearchForm>
+//                 </Formik>
+//                  <ToastContainer
+//           position="top-center"
+// autoClose={5000}
+// theme="colored"/>
+//                 </SearchbarComp>)
+//     }
+// }
 
 // export default Searchbar
