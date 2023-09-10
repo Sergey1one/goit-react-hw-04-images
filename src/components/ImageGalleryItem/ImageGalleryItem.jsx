@@ -1,5 +1,5 @@
 import { Modal } from "components/Modal/Modal";
-import { Component, useState } from "react"
+import {  useState } from "react"
 import { ImageContainer,Image, ImageModal } from "./ImageGalleryItem.styled";
 
 
@@ -30,34 +30,34 @@ const { webformatURL, tags,largeImageURL } = item
 
 
 
-class OLDImageGalleryItem extends Component {
+// class OLDImageGalleryItem extends Component {
 
-    state = {
-        showModal: false,
-    }
+//     state = {
+//         showModal: false,
+//     }
 
-    toggleModal = () => {
-    this.setState(({showModal})=>({showModal:!showModal}))
-}
+//     toggleModal = () => {
+//     this.setState(({showModal})=>({showModal:!showModal}))
+// }
 
-    render() {
-        const{showModal}=this.state
-        const { item } = this.props;
-        const { webformatURL, tags,largeImageURL } = item
-        return (
-            <>
-                <ImageContainer>
-                    <Image src={webformatURL} alt={tags} onClick={ this.toggleModal} />   
+//     render() {
+//         const{showModal}=this.state
+//         const { item } = this.props;
+//         const { webformatURL, tags,largeImageURL } = item
+//         return (
+//             <>
+//                 <ImageContainer>
+//                     <Image src={webformatURL} alt={tags} onClick={ this.toggleModal} />   
                     
-                    {showModal && <Modal onClose={this.toggleModal}  >
-                        <ImageModal src={largeImageURL} alt={tags} /></Modal>
-                        }
-                </ImageContainer>
+//                     {showModal && <Modal onClose={this.toggleModal}  >
+//                         <ImageModal src={largeImageURL} alt={tags} /></Modal>
+//                         }
+//                 </ImageContainer>
 
-            </>
-        )
-    }
+//             </>
+//         )
+//     }
 
-}
+// }
 
-// export default ImageGalleryItem
+// // export default ImageGalleryItem
