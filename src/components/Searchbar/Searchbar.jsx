@@ -1,5 +1,5 @@
 
-import React, { Component, useState } from "react";
+import React from "react";
 import {  Formik } from 'formik';
 import { ToastContainer } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
@@ -7,7 +7,7 @@ import {SearchbarComp, SearchBtn, SearchBtnLabel, SearchForm,SearchField} from '
 
 
 export default function Searchbar(input) {
-    const [inputData, setInputData] = useState('');
+    // const [inputData, setInputData] = useState('');
 
     const onFormSubmit = () => {
         console.log(input)
