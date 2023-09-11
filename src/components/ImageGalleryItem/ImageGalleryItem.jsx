@@ -8,9 +8,9 @@ export default function ImageGalleryItem({item}) {
 const { webformatURL, tags,largeImageURL } = item
 
     const toggleModal=() => {
-      console.log(`b ${showModal}`)
+     
         setShowModal(!showModal)
-        console.log(showModal)
+       
        
     }
  return (

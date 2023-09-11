@@ -1,79 +1,51 @@
 
-import React from "react";
-import {  Formik } from 'formik';
-import { ToastContainer } from 'react-toastify';
+import React, {useState} from "react";
+
+import { toast, ToastContainer } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
 import {SearchbarComp, SearchBtn, SearchBtnLabel, SearchForm,SearchField} from './Searchbar.styled'
 
 
-export default function Searchbar(input) {
-    // const [inputData, setInputData] = useState('');
+export default function Searchbar({ onSubmit }) {
+    const [inputData, setInputData] = useState('');
 
-    const onFormSubmit = () => {
-        console.log(input)
+    const onFormSubmit = (e) => {
+        e.preventDefault();
+        if (inputData.trim() === '') {
+           return   toast("😱 Try to type something ")
+           
+}
+        onSubmit(inputData);
+        setInputData('')
+    }
+
+    const changeQuery = ({target}) => {
+        setInputData(target.value)
     }
     
 
 
  return (
-            <SearchbarComp>
-            <Formik initialValues={{ input: '' }}
-            onSubmit={onFormSubmit}> 
-                    <SearchForm> 
-                         <SearchBtn type="submit">
+     <SearchbarComp>
+         <SearchForm onSubmit={onFormSubmit}>
+             <SearchBtn type="submit">
       <SearchBtnLabel>Search</SearchBtnLabel>
-    </SearchBtn>
-                        <SearchField type='text' name='input' placeholder='Search images and photos'
-                            autoFocus
-                        autoComplete='off'></SearchField>
-                        
+    </SearchBtn>  
+         
+             <SearchField type='text'
+                 name='input'
+                 placeholder='Search images and photos'
+                 autoFocus
+                 value={inputData}
+                 onChange={changeQuery}
+                 autoComplete='off'></SearchField>
+         </SearchForm>
+         <ToastContainer/>
+         </SearchbarComp>)
+          
                 
-</SearchForm>
-                </Formik>
-                 <ToastContainer
-          position="top-center"
-autoClose={5000}
-theme="colored"/>
-                </SearchbarComp>)
 }
 
 
 
 
-// class Searchbar23 extends Component {
-
-//     state = {
-//         inputData: ''
-//     }
-    
-    
-//     onFormSubmit = ({input},{resetForm}) => {
-       
-//         this.props.onSubmit(input)
-//          resetForm();
-//     }
-//     render() {
-//         return (
-//             <SearchbarComp>
-//             <Formik initialValues={{ input: '' }}
-//             onSubmit={this.onFormSubmit}> 
-//                     <SearchForm> 
-//                          <SearchBtn type="submit">
-//       <SearchBtnLabel>Search</SearchBtnLabel>
-//     </SearchBtn>
-//                         <SearchField type='text' name='input' placeholder='Search images and photos'
-//                             autoFocus
-//                         autoComplete='off'></SearchField>
-                        
-                
-// </SearchForm>
-//                 </Formik>
-//                  <ToastContainer
-//           position="top-center"
-// autoClose={5000}
-// theme="colored"/>
-//                 </SearchbarComp>)
-//     }
-// }
-
-// export default Searchbar

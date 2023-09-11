@@ -1,5 +1,5 @@
 
-import  React, { Component } from "react";
+import  React, {  useState } from "react";
 import Searchbar from "./Searchbar";
 import { ToastContainer, toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
@@ -12,57 +12,52 @@ import { Loader } from "./Loader/Loader";
 
 let page = 1;
 
-export default class App extends Component{
-  state = {
-    searchField: '',
-    items: [],
-    totalHits:0,
-    status:'idle'
-  }
-
-
+export default function App() {
+  const [searchField, setSearchField] = useState('')
+  const [items, setItems] = useState([])
+  const [totalItems, setTotalItems] = useState(0)
+  const[status,setStatus]=useState('idle')
   
 
-  formSubmitHandler = async inputData => {
+  const formSubmitHandler = async inputData => {
     page = 1;
+    console.log(inputData)
     if (inputData.trim() === '') {
       toast.error('You cannot search by empty field, try again.');
       return;
     }
     
       try {
-        this.setState({ status: 'pending' });
+        setStatus( 'pending' );
         const { totalHits, hits } = await fetchImg(inputData, page);
         if (hits.length < 1) {
-          this.setState({ status: 'idle' });
+          setStatus( 'idle' );
           toast.error(
             'Sorry, there are no images matching your search query. Please try again.'
           );
         }
-        
-          this.setState({
-            items: hits,
-            searchField: inputData,
-            totalHits: totalHits,
-            status: 'resolved',
-          });
+        setItems(hits);
+        setSearchField(inputData)
+        setTotalItems(totalHits)
+        setStatus('resolved')
+          
             }
       catch (error) {
-        this.setState({ status: 'rejected' });
+       setStatus('rejected')  ;
          }
   }
 
    
   
 
-  onLoadMore = async() => {
-    this.setState({ status: 'pending' });
+  const onLoadMore = async() => {
+    setStatus( 'pending') ;
     try {
-      const { hits } = await fetchImg(this.state.searchField, (page += 1));
-      this.setState(prevState => ({
-        items: [...prevState.items, ...hits],
-        status:'resolved'
-     }))
+      const { hits } = await fetchImg(searchField, (page += 1));
+     
+      setItems(prev => [...prev, ...hits]);
+      setStatus('resolved')
+    
     }
     catch {
       console.log("Error")
@@ -70,14 +65,10 @@ export default class App extends Component{
     
   }
 
-
-  render() {
-    const { searchField, items, status,totalHits } = this.state;
-
     if (status === 'idle') {
       return (
         <AppContainer>
-          <Searchbar searchField={searchField} onSubmit={this.formSubmitHandler} />
+          <Searchbar searchField={searchField} onSubmit={formSubmitHandler} />
            <ToastContainer  position="top-center"
 autoClose={5000} theme="colored"/>
         </AppContainer>
@@ -87,7 +78,7 @@ autoClose={5000} theme="colored"/>
     if (status === 'pending') {
       return (
        <AppContainer>
-          <Searchbar searchField={searchField} onSubmit={this.formSubmitHandler} />
+          <Searchbar searchField={searchField} onSubmit={formSubmitHandler} />
          
           <ImageGallery galleryItems={items} />
           <Loader/>
@@ -99,10 +90,10 @@ autoClose={5000} theme="colored"/>
     if (status === 'resolved') {
        return (
        <AppContainer>
-          <Searchbar searchField={searchField} onSubmit={this.formSubmitHandler} />
+          <Searchbar searchField={searchField} onSubmit={formSubmitHandler} />
            <ImageGallery galleryItems={items} />
-           {totalHits > 12 && totalHits>items.length&&
-             <LoadMoreBtn onClick={this.onLoadMore} /> }
+           {totalItems > 12 && totalItems>items.length&&
+             <LoadMoreBtn onClick={onLoadMore} /> }
           
         </AppContainer> 
       )
@@ -111,30 +102,11 @@ autoClose={5000} theme="colored"/>
     if (status === 'rejected') {
       return (
          <AppContainer>
-          <Searchbar searchField={searchField} onSubmit={this.formSubmitHandler} />
+          <Searchbar searchField={searchField} onSubmit={formSubmitHandler} />
           <p>SHIT HAPPENS </p>
         </AppContainer> 
       )
     }
     }
-//     return(
-    
-//       <>
-//    <AppContainer>
-//           <Searchbar searchField={ searchField}  onSubmit={this.formSubmitHandler}/>
-
   
-          
-//           <ImageGallery galleryItems={items} />
 
-//           <button type="button" onClick={this.onLoadMore}>Load more...</button>
-//             <ToastContainer
-//           position="top-center"
-// autoClose={5000}
-// theme="colored"/>
-//         </AppContainer>
-      
-    // <GlobalStyle />
-    // </>
-  //   )
-  }
